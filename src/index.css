@@ -1,3 +1,9 @@
-@import "tailwindcss";
+body {
+  background-color: #f8f9fa;
+}
 
-@custom-variant dark (&:where(.dark, .dark *));
+.poster {
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  width: 100%;
+}
