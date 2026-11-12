@@ -31,7 +31,7 @@ export default function UpcomingPage({ genres }) {
 
         setTotalPages(data.total_pages || 1)
       } catch (err) {
-        setError(err.message || 'Elokuvien lataus epäonnistui.')
+        setError(err.message || 'Loading movies failed')
       } finally {
         setLoading(false)
       }

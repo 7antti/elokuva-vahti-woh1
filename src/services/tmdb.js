@@ -3,13 +3,21 @@ const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
 export const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500'
 
+function getToday() {
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 async function fetchFromApi(endpoint, queryParams = '') {
   if (!API_KEY) {
-    throw new Error('TMDB API -avain puuttuu (.env -> VITE_TMDB_API_KEY)')
+    throw new Error('API key missing (.env -> VITE_TMDB_API_KEY)')
   }
 
   const separator = queryParams ? '&' : ''
-  const url = `${BASE_URL}${endpoint}?api_key=${API_KEY}&language=fi-FI${separator}${queryParams}`
+  const url = `${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US${separator}${queryParams}`
 
   const response = await fetch(url)
 
@@ -21,7 +29,11 @@ async function fetchFromApi(endpoint, queryParams = '') {
 }
 
 export async function getUpcomingMovies(page = 1) {
-  return await fetchFromApi('/movie/upcoming', `page=${page}`)
+    const today = getToday()
+  return await fetchFromApi(
+    '/discover/movie',
+    `primary_release_date.gte=${today}&sort_by=popularity.desc&include_adult=false&page=${page}`
+  )
 }
 
 export async function searchMovies(query) {
@@ -44,7 +56,7 @@ export async function getGenres() {
 }
 
 export function formatDate(dateString) {
-  if (!dateString) return 'Ei julkaisupäivää'
+  if (!dateString) return 'No release date'
   const [year, month, day] = dateString.split('-')
   if (!year || !month || !day) return dateString
   return `${Number(day)}.${Number(month)}.${year}`
