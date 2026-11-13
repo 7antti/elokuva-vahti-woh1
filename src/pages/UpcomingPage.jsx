@@ -49,6 +49,9 @@ export default function UpcomingPage({ genres, isInWatchlist, onToggleWatchlist 
   return (
     <div>
       <h2 className="mb-4">Upcoming Movies</h2>
+      <p className="text-muted mb-4">
+        This site uses themoviedb.org API to fetch movie data. The upcoming movies are sorted by release date.
+      </p>
 
       {error && (
         <div className="alert alert-danger">

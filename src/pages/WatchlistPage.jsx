@@ -8,6 +8,9 @@ export default function WatchlistPage({ watchlist, genres, isInWatchlist, onTogg
   return (
     <div>
       <h2 className="mb-4">My watchlist</h2>
+      <p className="text-muted mb-4">
+        This site uses themoviedb.org API to fetch movie data. The watchlist shows the movies you have added to your list.
+      </p>
 
       {sortedMovies.length === 0 ? (
         <div className="text-center my-5">

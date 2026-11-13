@@ -36,11 +36,11 @@ export async function getUpcomingMovies(page = 1) {
   )
 }
 
-export async function searchMovies(query) {
+export async function searchMovies(query, page = 1) {
   const today = getToday()
   const data = await fetchFromApi(
     '/search/movie',
-    `query=${encodeURIComponent(query)}&include_adult=false`
+    `query=${encodeURIComponent(query)}&include_adult=false&page=${page}`
   )
 
 
@@ -56,11 +56,11 @@ export async function searchMovies(query) {
   // return { ...data, results: futureResults }
 }
 
-export async function getMoviesByGenre(genreId) {
+export async function getMoviesByGenre(genreId, page = 1) {
   const today = getToday()
   return await fetchFromApi(
     '/discover/movie',
-    `with_genres=${genreId}&primary_release_date.gte=${today}&sort_by=primary_release_date.asc&include_adult=false`
+    `with_genres=${genreId}&primary_release_date.gte=${today}&sort_by=primary_release_date.asc&include_adult=false&page=${page}`
   )
 }
 
