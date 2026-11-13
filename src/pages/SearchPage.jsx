@@ -135,12 +135,6 @@ export default function SearchPage({ genres, isInWatchlist, onToggleWatchlist })
 
       {error && <div className="alert alert-danger">{error}</div>}
 
-      {loading && (
-        <div className="text-center my-4">
-          <div className="spinner-border text-primary" role="status" />
-        </div>
-      )}
-
       {!loading && activeSearch && movies.length === 0 && !error && (
         <p className="text-muted">No movies for the given criteria</p>
       )}
