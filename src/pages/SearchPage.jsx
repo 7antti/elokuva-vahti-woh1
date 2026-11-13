@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { getMoviesByGenre, searchMovies } from '../Services/tmdb'
 import MovieCard from '../components/MovieCard'
 
-export default function SearchPage({ genres }) {
+export default function SearchPage({ genres, isInWatchlist, onToggleWatchlist }) {
   const [query, setQuery] = useState('')
   const [selectedGenre, setSelectedGenre] = useState('')
   const [movies, setMovies] = useState([])
@@ -84,7 +84,7 @@ export default function SearchPage({ genres }) {
 
         <div className="col-12 col-md-3 d-flex gap-2">
           <button type="submit" className="btn btn-primary w-100">
-            Hae
+            Search
           </button>
           {searched && (
             <button
@@ -113,7 +113,12 @@ export default function SearchPage({ genres }) {
       <div className="row g-3">
         {movies.map((movie) => (
           <div className="col-6 col-md-3" key={movie.id}>
-            <MovieCard movie={movie} genres={genres} />
+            <MovieCard 
+              movie={movie} 
+              genres={genres} 
+              isSaved={isInWatchlist(movie.id)}
+              onToggleWatchlist={onToggleWatchlist}
+            />
           </div>
         ))}
       </div>

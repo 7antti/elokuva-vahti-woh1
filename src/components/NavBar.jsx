@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { Bookmark, Calendar, Film, Search } from 'lucide-react'
 
-export default function Navbar() {
+export default function Navbar({ watchlistCount }) {
   return (
     <nav className="navbar bg-white border-bottom">
       <div className="container">
@@ -23,7 +23,7 @@ export default function Navbar() {
 
           <NavLink to="/watchlist" className="nav-link">
             <Bookmark size={16} className="me-1" />
-            Watchlist
+            Watchlist ({watchlistCount})
           </NavLink>
         </div>
       </div>

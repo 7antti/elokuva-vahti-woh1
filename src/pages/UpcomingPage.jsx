@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer'
 import { getUpcomingMovies } from '../Services/tmdb'
 import MovieCard from '../components/MovieCard'
 
-export default function UpcomingPage({ genres }) {
+export default function UpcomingPage({ genres, isInWatchlist, onToggleWatchlist }) {
   const [movies, setMovies] = useState([])
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -66,14 +66,19 @@ export default function UpcomingPage({ genres }) {
       <div className="row g-3">
         {movies.map((movie) => (
           <div className="col-6 col-md-3" key={movie.id}>
-            <MovieCard movie={movie} genres={genres} />
+            <MovieCard 
+              movie={movie} 
+              genres={genres} 
+              isSaved={isInWatchlist(movie.id)}
+              onToggleWatchlist={onToggleWatchlist}
+              />
           </div>
         ))}
       </div>
 
       <div ref={ref} className="text-center my-4 text-muted">
         {loading && <div className="spinner-border text-primary" role="status" />}
-        {!loading && movies.length > 0 && page >= totalPages && <p>Kaikki elokuvat ladattu.</p>}
+        {!loading && movies.length > 0 && page >= totalPages && <p>Everything loaded.</p>}
       </div>
     </div>
   )
