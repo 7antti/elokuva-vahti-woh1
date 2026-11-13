@@ -37,16 +37,24 @@ export async function getUpcomingMovies(page = 1) {
 }
 
 export async function searchMovies(query) {
-  return await fetchFromApi(
+  const today = getToday()
+  const data = await fetchFromApi(
     '/search/movie',
     `query=${encodeURIComponent(query)}&include_adult=false`
   )
+
+  const futureResults = (data.results || []).filter(
+    (movie) => movie.release_date && movie.release_date >= today
+  )
+
+  return { ...data, results: futureResults }
 }
 
 export async function getMoviesByGenre(genreId) {
+  const today = getToday()
   return await fetchFromApi(
     '/discover/movie',
-    `with_genres=${genreId}&sort_by=popularity.desc&include_adult=false`
+    `with_genres=${genreId}&primary_release_date.gte=${today}&sort_by=popularity.desc&include_adult=false`
   )
 }
 
